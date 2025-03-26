@@ -12,10 +12,10 @@ public class DishOrderCrudImpl implements DishOrderCrud {
     @Override
     public DishOrder createDishOrder(DishOrder toCreate, int orderId) {
         String sql = """
-            INSERT INTO OrderDish (order_dish_id, dish_id, order_id, quantity) 
-            VALUES (?, ?, ?, ?) 
-            ON CONFLICT (order_dish_id) DO UPDATE SET quantity = excluded.quantity
-        """;
+                    INSERT INTO OrderDish (order_dish_id, dish_id, order_id, quantity) 
+                    VALUES (?, ?, ?, ?) 
+                    ON CONFLICT (order_dish_id) DO UPDATE SET quantity = excluded.quantity
+                """;
 
         try (Connection connection = db.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -28,14 +28,13 @@ public class DishOrderCrudImpl implements DishOrderCrud {
             int rowsAffected = stmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("Commande ajoutée ou mise à jour avec succès !");
+                System.out.println("Dish add successfully !!! >_<");
             } else {
-                System.out.println("Aucune ligne affectée. Vérifiez les valeurs.");
+                System.out.println("no rows affected !");
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Erreur lors de l'ajout ou de la mise à jour de la commande.", e);
+            throw new RuntimeException(e);
         }
 
         return toCreate;

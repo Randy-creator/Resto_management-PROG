@@ -16,6 +16,9 @@ public class DishOrder {
         this.status = status;
     }
 
+    public DishOrder() {
+    }
+
     public int getDishOrderId() {
         return dishOrderId;
     }
@@ -68,6 +71,11 @@ public class DishOrder {
     @Override
     public String toString() {
         return "DishOrder{" + "dishOrderId=" + dishOrderId + ", dishOrdered=" + dishOrdered + ", quantityOrdered=" + quantityOrdered + ", status=" + status + '}';
+    }
+
+
+    public boolean isAvailable() {
+        return this.getQuantityOrdered() <= this.dishOrdered.getAvailableQuantity();
     }
 }
 

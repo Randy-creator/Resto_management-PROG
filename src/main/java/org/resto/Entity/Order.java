@@ -17,6 +17,9 @@ public class Order {
         this.status = status;
     }
 
+    public Order() {
+    }
+
     public int getOrderId() {
         return orderId;
     }
@@ -79,7 +82,11 @@ public class Order {
     }
 
 
-    private Status getActualStatus() {
+    public Status getActualStatus() {
         return this.status.getLast().status_name;
+    }
+
+    public boolean isCommandAvailable() {
+        return this.getDishOrderList().stream().allMatch(DishOrder::isAvailable);
     }
 }

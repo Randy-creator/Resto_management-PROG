@@ -1,8 +1,6 @@
 import org.junit.jupiter.api.Test;
 import org.resto.DAO.*;
-import org.resto.Entity.Ingredient;
-import org.resto.Entity.Movement;
-import org.resto.Entity.Unities;
+import org.resto.Entity.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,6 +14,7 @@ public class AllTest {
     private IngredientCrudImpl ingredientSubject = new IngredientCrudImpl();
     private OrderCrudImpl orderCrudSubject = new OrderCrudImpl();
     private DishOrderCrudImpl dishOrderCrudSubject = new DishOrderCrudImpl();
+    private StateCrudImpl stateCrudSubject = new StateCrudImpl();
 
 
     @Test
@@ -146,5 +145,67 @@ public class AllTest {
         return RiceMove1;
     }
 
+    private Order OrderTest() {
+        Order OrderTest = new Order();
+        OrderTest.setOrderId(1);
+        OrderTest.setOrderReference("CH1");
 
+        return OrderTest;
+    }
+
+    @Test
+    public void createorder() {
+        Order order = OrderTest();
+        var actual = orderCrudSubject.crupdateOrder(order);
+        System.out.println(actual);
+
+        assertEquals(1, 1);
+    }
+
+
+    private DishOrder DishOrderTest() {
+        DishOrder DishOrderTest = new DishOrder();
+        Dish hot_dog = hot_dog();
+
+        DishOrderTest.setDishOrderId(1);
+        DishOrderTest.setDishOrdered(hot_dog);
+        DishOrderTest.setQuantityOrdered(1);
+        return DishOrderTest;
+    }
+
+    private Dish hot_dog() {
+        Dish hot_dog = new Dish();
+        hot_dog.setDish_id(1);
+        hot_dog.setUnitPrice(15000);
+        hot_dog.setName("Hot dog");
+        return hot_dog;
+    }
+
+    @Test
+    public void createDishOrder() {
+        DishOrder DishOrderTest = DishOrderTest();
+        Order OrderTest = OrderTest();
+        var actual = dishOrderCrudSubject.createDishOrder(DishOrderTest, OrderTest.getOrderId());
+        System.out.println(actual);
+
+        assertEquals(1, 1);
+    }
+
+    private State stateTest() {
+        State stateTest = new State();
+        stateTest.setStatus_name(Status.CREATED);
+        stateTest.setStatusModificationDate(LocalDateTime.of(2025, 01, 01, 00, 00));
+
+        return stateTest;
+    }
+
+    @Test
+    public void createStateTest() {
+        State stateTest = stateTest();
+        Order order = OrderTest();
+        var actual = stateCrudSubject.insertState(stateTest, order.getOrderId());
+        System.out.println(actual);
+
+        assertEquals(1, 1);
+    }
 }

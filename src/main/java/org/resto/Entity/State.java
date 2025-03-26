@@ -12,6 +12,9 @@ public class State {
         this.statusModificationDate = statusModificationDate;
     }
 
+    public State() {
+    }
+
     public Status getStatus_name() {
         return status_name;
     }
